@@ -8,8 +8,9 @@
 #include <string>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
-
+#include <chrono>
 using boost::asio::ip::tcp;
+
 
 class tcp_connection : public std::enable_shared_from_this<tcp_connection> {
 public:
@@ -34,6 +35,9 @@ public:
         ss << file.rdbuf();
         message_ = ss.str();
 
+        // Record the start time
+        start_time_ = std::chrono::high_resolution_clock::now();
+
         boost::asio::async_write(socket_, boost::asio::buffer(message_),
             boost::bind(&tcp_connection::handle_write, shared_from_this(),
                 boost::asio::placeholders::error,
@@ -45,13 +49,19 @@ private:
         : socket_(io_context) {
     }
 
-    void handle_write(const boost::system::error_code& /*error*/,
-                      size_t /*bytes_transferred*/) {
-        // Handle write completion
+    void handle_write(const boost::system::error_code& error, size_t /*bytes_transferred*/) {
+        if (!error) {
+            // Record the end time
+            auto end_time = std::chrono::high_resolution_clock::now();
+            // Calculate the elapsed time in milliseconds
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time_).count();
+            std::cout << "File transfer completed in " << duration << " milliseconds." << std::endl;
+        }
     }
 
     tcp::socket socket_;
     std::string message_;
+    std::chrono::high_resolution_clock::time_point start_time_;
 };
 
 class tcp_server {
@@ -102,4 +112,4 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-	
+
