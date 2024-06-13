@@ -1,6 +1,6 @@
 # TCP Socket Project
 
-This project consists of a TCP server and client for transferring files using Boost.Asio in C++.
+This project consists of an asynchronous TCP server and client for transferring files using Boost.Asio in C++.
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@ This project consists of a TCP server and client for transferring files using Bo
 
 ## Introduction
 
-This project implements a TCP server and client using the Boost.Asio library. The server accepts incoming connections and sends a specified file to the connected client. The client connects to the server, receives the file, and saves it locally.
+This project implements an asynchronous TCP server and client using the Boost.Asio library. The server accepts incoming connections and sends a specified file to the connected client. The client connects to the server, receives the file, and saves it locally.
 
 ## Requirements
 
