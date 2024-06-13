@@ -8,9 +8,7 @@ This project consists of a TCP server and client for transferring files using Bo
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [File Structure](#file-structure)
-- [Troubleshooting](#troubleshooting)
-- [License](#license)
+- [References](#references)
 
 ## Introduction
 
